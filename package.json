@@ -1,0 +1,21 @@
+{
+  "name": "magsmidi",
+  "version": "1.0.0",
+  "description": "Light visualizer for midi files",
+  "main": "src/index.js",
+  "bin": {
+    "magsmidi": "bin/magsmidi.js"
+  },
+  "scripts": {
+    "decode": "magsmidi -decode assets/final.mid assets/final.json",
+    "play": "magsmidi -play assets/final.wav assets/final.json"
+  },
+  "keywords": [],
+  "author": "Magdi Hazaa",
+  "license": "ISC",
+  "dependencies": {
+    "blinkstick": "^1.2.0",
+    "fs": "^0.0.1-security",
+    "midi-parser-js": "^4.0.4"
+  }
+}
