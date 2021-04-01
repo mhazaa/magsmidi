@@ -1,6 +1,3 @@
-//require(__dirname + '/../modules/serial.js')();
-//return;
-
 const CONFIG = require(__dirname + '/../decoder.config.js');
 const commands = require(__dirname + '/../src/commands');
 const argsParser = require('mags-modules/argsParser');
@@ -8,16 +5,21 @@ const argsParser = require('mags-modules/argsParser');
 const args = argsParser({
   '-decode': ['string', 'string'],
   '-play': ['string', 'string'],
+  //'-decodeNplay': ['string'],
+  //'-live': [];
   '-d': '-decode',
-  '-p': '-play'
+  '-p': '-play',
+  '-dp': '-decodeNplay',
+  '-l': '-live'
 });
 
-console.log(args);
 const decode = args['-decode'];
 const play = args['-play'];
-const bpm = CONFIG.bpm || 120;
+const decodeNplay = args['-decodeNplay'];
 
 module.exports = () => {
   if(decode) commands.decode(decode[0], decode[1]);
   if(play) commands.play(play[0], play[1]);
+  //if(decodeNplay) commands.play(decodeNplay[0]);
+  //if(live) commands.live();
 }

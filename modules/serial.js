@@ -57,7 +57,8 @@ module.exports = () => {
 }
 return;
 
-const ColorControls = require(__dirname + '/../modules/ColorControls');
+const ColorControls = require('mags-modules/ColorControls');
+ColorControls
 const randomInt = require(__dirname + '/../modules/randomInt');
 
 module.exports = () => {

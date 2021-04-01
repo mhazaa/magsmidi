@@ -62,3 +62,14 @@ module.exports.play = async(song, jsonFile) => {
     console.log(`UH-OH: ${error}`);
   }
 }
+
+module.exports.live = async () => {
+  try {
+    //require(__dirname + '/../modules/serial.js')();
+    //return;
+    const chords = await MidiDecoder.decode(filePath, output);
+    console.log(chords);
+  } catch (error) {
+    console.log(`UH-OH: ${error}`);
+  }
+}
