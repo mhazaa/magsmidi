@@ -1,3 +1,6 @@
+//require(__dirname + '/../modules/serial.js')();
+//return;
+
 const CONFIG = require(__dirname + '/../decoder.config.js');
 const commands = require(__dirname + '/../src/commands');
 const argsParser = require('mags-modules/argsParser');

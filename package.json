@@ -7,14 +7,15 @@
     "magsmidi": "bin/magsmidi.js"
   },
   "scripts": {
-    "decode": "magsmidi -decode assets/final.mid assets/final.json",
-    "play": "magsmidi -play assets/final.wav assets/final.json"
+    "decode": "magsmidi -decode assets/forgive.mid assets/forgive.json",
+    "play": "magsmidi -play assets/forgive.wav assets/forgive.json"
   },
   "keywords": [],
   "author": "Magdi Hazaa",
   "license": "ISC",
   "dependencies": {
     "blinkstick": "^1.2.0",
+    "easymidi": "^2.0.1",
     "fs": "^0.0.1-security",
     "midi-parser-js": "^4.0.4"
   }
