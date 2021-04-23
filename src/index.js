@@ -1,25 +1,9 @@
-const CONFIG = require(__dirname + '/../decoder.config.js');
-const commands = require(__dirname + '/../src/commands');
-const argsParser = require('mags-modules/argsParser');
-
-const args = argsParser({
-  '-decode': ['string', 'string'],
-  '-play': ['string', 'string'],
-  //'-decodeNplay': ['string'],
-  //'-live': [];
-  '-d': '-decode',
-  '-p': '-play',
-  '-dp': '-decodeNplay',
-  '-l': '-live'
-});
-
-const decode = args['-decode'];
-const play = args['-play'];
-const decodeNplay = args['-decodeNplay'];
-
-module.exports = () => {
-  if(decode) commands.decode(decode[0], decode[1]);
-  if(play) commands.play(play[0], play[1]);
-  //if(decodeNplay) commands.play(decodeNplay[0]);
-  //if(live) commands.live();
-}
+/* Library classes */
+module.exports.MidiDecoder = require(__dirname + '/../lib/MidiDecoder');
+module.exports.MidiPlayer = require(__dirname + '/../lib/MidiPlayer');
+module.exports.MidiLivePlayer = require(__dirname + '/../lib/MidiLivePlayer');
+/* Different light systems classes and modules */
+module.exports.BlinkstickControls = require(__dirname + '/../modules/BlinkstickControls');
+//module.exports.johnnyFive = require(__dirname + '/../modules/johnnyFive');
+//module.exports.Lifx = require(__dirname + '/../modules/Lifx');
+//module.exports.Serial = require(__dirname + '/../modules/Serial');

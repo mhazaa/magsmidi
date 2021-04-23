@@ -8,13 +8,14 @@
   },
   "scripts": {
     "decode": "magsmidi -decode assets/forgive.mid assets/forgive.json",
-    "play": "magsmidi -play assets/forgive.wav assets/forgive.json"
+    "playLive": "magsmidi -playLive"
   },
   "keywords": [],
   "author": "Magdi Hazaa",
   "license": "ISC",
   "dependencies": {
     "blinkstick": "^1.2.0",
+    "dmx": "^0.2.5",
     "easymidi": "^2.0.1",
     "fs": "^0.0.1-security",
     "midi-parser-js": "^4.0.4"
