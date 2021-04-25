@@ -10,6 +10,10 @@
     "decode": "magsmidi -decode assets/forgive.mid assets/forgive.json",
     "playLive": "magsmidi -playLive"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mhazaa/mags-modules"
+  },
   "keywords": [],
   "author": "Magdi Hazaa",
   "license": "ISC",
@@ -18,6 +22,7 @@
     "dmx": "^0.2.5",
     "easymidi": "^2.0.1",
     "fs": "^0.0.1-security",
+    "mags-modules": "^1.0.1",
     "midi-parser-js": "^4.0.4"
   }
 }
