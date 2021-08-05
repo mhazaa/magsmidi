@@ -7,12 +7,12 @@
     "magsmidi": "bin/magsmidi.js"
   },
   "scripts": {
-    "decode": "magsmidi -decode assets/forgive.mid assets/forgive.json",
-    "playLive": "magsmidi -playLive"
+    "decode": "magsmidi -decode",
+    "livePlay": "magsmidi -livePlay"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mhazaa/mags-modules"
+    "url": "https://github.com/mhazaa/magsmidi"
   },
   "keywords": [],
   "author": "Magdi Hazaa",

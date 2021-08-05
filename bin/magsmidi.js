@@ -10,9 +10,14 @@ const args = argsParser({
 });
 
 const decode = args['-decode'];
-const midiFilePath = decode[0];
-const output = decode[1] || null;
-if(decode) commands.decode(midiFilePath, output);
+if (decode) {
+  const midiFilePath = decode[0];
+  if (!midiFilePath) throw new Error('midiFilePath must be defined as the first argument')
+  const output = decode[1] || null;
+  commands.decode(midiFilePath, output);
+}
 
 const livePlay = args['-livePlay'];
-if(livePlay) commands.livePlay();
+if (livePlay) {
+  commands.livePlay();
+}

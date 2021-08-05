@@ -44,7 +44,7 @@ class Lifx {
     }
 
     var req = https.request(options, function(res){
-      console.log(res);
+      //console.log(res);
     });
     req.on('error', function(err){
       console.log('error: ' + err.message);

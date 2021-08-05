@@ -1,15 +1,16 @@
 const defaultConfig = {
   decoderOptions: {
-    bpm: 70,
+    bpm: 120,
     randomize: true,
-    channelsRange: [1, 6], //[min, max]
-    channels: [1], //[0, 1, 2, 3...] //takes priority over channelsRange
-    colors: ['#ff0000', '#00ff00', '#0000ff'],
-    types: ['fadein'] //select between ['blink', 'blend', 'fadein', 'fadeout']
+    channelsRange: [0, 7], //[min, max]
+    //channels: [1], //[0, 1, 2, 3...] //takes priority over channelsRange
+    colors: ['#9500ff', '#ffba00', '#0700ff', '#00ffb3', '#ff000f'], //random color if not defined
+    types: ['blink', 'fadein', 'blend'] //select between ['blink', 'blend', 'fadein', 'fadeout']
   },
   playerOptions: {
     log: false,
-    logDuring: false
+    logDuring: false,
+    loopLights: false
   },
   livePlayerOptions: {
     midiKeyboard: 'MPKmini2'
@@ -18,8 +19,7 @@ const defaultConfig = {
 
 const userConfig = () => {
   try {
-    const x = require('../../../magsmidi.config');
-    console.log(x);
+    return require('../../magsmidi.config');
   } catch {
     return {
       decoderOptions: {},
@@ -28,13 +28,21 @@ const userConfig = () => {
   }
 }
 
-const CONFIG = () => {
-  const config = {};
-  for (const [key, value] of Object.entries(defaultConfig)) {
-    config[key] = defaultConfig[key];
-    if (typeof userConfig()[key] !== 'undefined') config[key] = Object.assign(config[key], userConfig()[key]);
+const _userConfig = userConfig();
+
+const CONFIG = {
+  decoderOptions: {
+    ...defaultConfig.decoderOptions,
+    ..._userConfig.decoderOptions
+  },
+  playerOptions: {
+    ...defaultConfig.playerOptions,
+    ..._userConfig.playerOptions
+  },
+  livePlayerOptions: {
+    ...defaultConfig.livePlayerOptions,
+    ..._userConfig.livePlayerOptions
   }
-  return config;
 }
 
-module.exports = CONFIG();
+module.exports = CONFIG;

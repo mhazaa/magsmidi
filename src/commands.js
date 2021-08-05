@@ -1,5 +1,5 @@
 const MidiDecoder = require(__dirname + '/../lib/MidiDecoder');
-//const MidiLivePlayer = require(__dirname + '/../lib/MidiLivePlayer');
+const MidiLivePlayer = require(__dirname + '/../lib/MidiLivePlayer');
 
 module.exports.decode = async (midiFilePath, output) => {
   try {
@@ -12,8 +12,8 @@ module.exports.decode = async (midiFilePath, output) => {
 
 module.exports.livePlay = async () => {
   try {
-    //const chords = await MidiLivePlayer.play();
-    //console.log(chords);
+    const midiLivePlayer = new MidiLivePlayer();
+    midiLivePlayer.start();
   } catch (error) {
     console.log(`UH-OH: ${error}`);
   }
