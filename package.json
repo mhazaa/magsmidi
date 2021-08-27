@@ -1,6 +1,6 @@
 {
   "name": "magsmidi",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Light visualizer for midi files",
   "main": "src/index.js",
   "bin": {
