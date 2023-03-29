@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "Light visualizer for midi files",
   "scripts": {
-    "decode": "magsmidi -decode",
-    "livePlay": "magsmidi -livePlay"
+  },
+  "repository": {
+	"type": "git",
+	"url": "https://github.com/mhazaa/magsmidi.git" 
   },
   "keywords": [],
   "author": "Magdi Hazaa",
