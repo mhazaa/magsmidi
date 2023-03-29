@@ -1,12 +1,11 @@
 {
   "name": "@mhazaa/magsmidi",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Light visualizer for midi files",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
-	"type": "git",
-	"url": "https://github.com/mhazaa/magsmidi.git" 
+    "type": "git",
+    "url": "https://github.com/mhazaa/magsmidi.git"
   },
   "keywords": [],
   "author": "Magdi Hazaa",
