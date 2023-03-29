@@ -1,0 +1,24 @@
+{
+  "name": "@mhazaa/magsmidi",
+  "version": "1.0.0",
+  "description": "Light visualizer for midi files",
+  "scripts": {
+    "decode": "magsmidi -decode",
+    "livePlay": "magsmidi -livePlay"
+  },
+  "keywords": [],
+  "author": "Magdi Hazaa",
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.10.1",
+    "@typescript-eslint/parser": "^5.10.1",
+    "eslint": "^8.7.0",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "dmx": "^0.2.5",
+    "easymidi": "^2.1.0",
+    "midi-parser-js": "^4.0.4"
+  }
+}
