@@ -9,5 +9,11 @@
 		"forceConsistentCasingInFileNames": true,
 		"strict": false,
 		"skipLibCheck": true
+	},
+	"files": [
+		"@types/custom.d.ts"
+	],
+	"ts-node": {
+		"files": true
 	}
 }
