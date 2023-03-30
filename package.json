@@ -1,10 +1,10 @@
 {
   "name": "@mhazaa/magsmidi",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Light visualizer for midi files",
   "scripts": {
-	"build": "tsc -p tsconfig.esm.json && tsc -p tsconfig.cjs.json",
-	"prepublishOnly": "npm run build"
+    "build": "tsc -p tsconfig.esm.json && tsc -p tsconfig.cjs.json",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
