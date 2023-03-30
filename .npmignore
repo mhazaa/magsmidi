@@ -1,8 +1,8 @@
 .DS_STORE
-bin
-example
-helperFunctions
-lib
-modules
-songs
-src
+/@types
+/example
+/helperFunctions
+/lib
+/modules
+/songs
+/src

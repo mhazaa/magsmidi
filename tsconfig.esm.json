@@ -1,7 +1,9 @@
 {
 	"compilerOptions": {
 		"target": "esNext",
-		"module": "commonjs",
+		"module": "esNext",
+		"declaration": true,
+		"outDir": "./build/esm",
 		"allowJs": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
@@ -13,5 +15,5 @@
 	],
 	"ts-node": {
 		"files": true
-	},
+	}
 }
