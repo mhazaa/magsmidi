@@ -1,6 +1,6 @@
 import { UserConfig } from '../src';
 
-const earthConfig: UserConfig = {
+const exampleConfig: UserConfig = {
 	decoderOptions: {
 		bpm: 192,
 		channels: [1, 15, 30],
@@ -11,4 +11,4 @@ const earthConfig: UserConfig = {
 	},
 };
 
-export default earthConfig;
+export default exampleConfig;

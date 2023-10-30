@@ -1,19 +1,13 @@
 {
 	"compilerOptions": {
-		"target": "esNext",
-		"module": "esNext",
+		"target": "esnext",
+		"module": "esnext",
+		"moduleResolution": "node",
 		"declaration": true,
 		"outDir": "./build/esm",
-		"allowJs": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"strict": false,
 		"skipLibCheck": true
-	},
-	"files": [
-		"@types/custom.d.ts"
-	],
-	"ts-node": {
-		"files": true
 	}
 }

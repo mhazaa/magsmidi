@@ -1,5 +1,5 @@
-import FULLCONFIG from '../CONFIG';
-const CONFIG = FULLCONFIG.playerOptions;
+import CONFIG from '../CONFIG';
+const PLAYER_CONFIG = CONFIG.playerOptions;
 import { Color, Note, Chord } from './MidiDecoder';
 
 import { runShellAsync } from '../helperFunctions/shell';
@@ -34,7 +34,7 @@ class Timer {
 	tick (): number {
 		this.currentTime = new Date();
 		timeElapsed = this.currentTime.getTime() - this.deltaTime.getTime();
-		if (CONFIG.loopLights && timeElapsed > this.end) this.restart();
+		if (PLAYER_CONFIG.loopLights && timeElapsed > this.end) this.restart();
 		return timeElapsed;
 	}
 }
@@ -100,7 +100,7 @@ class NotePlayer extends Note {
 	}
 
 	start () {
-		if (CONFIG.log) console.log(this.key + ': started');
+		if (PLAYER_CONFIG.log) console.log(this.key + ': started');
 
 		this.lights.forEach(light => {
 			const data = new EventData();
@@ -121,7 +121,7 @@ class NotePlayer extends Note {
 	}
 
 	during () {
-		if (CONFIG.logDuring) console.log(this.key + ': during');
+		if (PLAYER_CONFIG.logDuring) console.log(this.key + ': during');
 
 		this.lights.forEach( light => {
 			if (light.lightType === 'blink') return;
@@ -156,7 +156,7 @@ class NotePlayer extends Note {
 	}
 
 	end () {
-		if (CONFIG.log) console.log(this.key + ': end');
+		if (PLAYER_CONFIG.log) console.log(this.key + ': end');
 
 		this.lights.forEach(light => {
 			const data: EventData = {
@@ -218,7 +218,7 @@ class NotePlayer extends Note {
 }
 
 class ChordPlayer extends StatefulComponent {
-	notes: Note[];
+	notes: Note[] = [];
 	notePlayers: NotePlayer[] = [];
 	runDuring = true;
 	onStart: (data: EventData) => void = () => null;

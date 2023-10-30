@@ -1,5 +1,5 @@
-import FULLCONFIG from '../CONFIG';
-const CONFIG = FULLCONFIG.decoderOptions;
+import CONFIG from '../CONFIG';
+const DECODER_CONFIG = CONFIG.decoderOptions;
 import midiParser from 'midi-parser-js';
 
 import { readFile, writeFile } from '../helperFunctions/fsAsync';
@@ -55,23 +55,23 @@ class Light {
 	colors: Color[];
 
 	constructor () {
-		this.lightType = randomFromArray(CONFIG.lightTypes || lightTypes);
+		this.lightType = randomFromArray(DECODER_CONFIG.lightTypes || lightTypes);
 
-		if (CONFIG.channelsRange) this.channel = randomInt(CONFIG.channelsRange[0], CONFIG.channelsRange[1]);
-		if (CONFIG.channels) this.channel = randomFromArray(CONFIG.channels);
+		if (DECODER_CONFIG.channelsRange) this.channel = randomInt(DECODER_CONFIG.channelsRange[0], DECODER_CONFIG.channelsRange[1]);
+		if (DECODER_CONFIG.channels) this.channel = randomFromArray(DECODER_CONFIG.channels);
 
-		if (!CONFIG.colors) {
+		if (!DECODER_CONFIG.colors) {
 			this.colors = [new Color()];
 			if (this.lightType === 'blend') this.colors.push(new Color());
 			return;
 		}
 
-		const randomColorHex: string = randomFromArray(CONFIG.colors);
+		const randomColorHex: string = randomFromArray(DECODER_CONFIG.colors);
 		this.colors = [new Color(randomColorHex)];
 
 		if (this.lightType === 'blend') {
 			const endRandomColorHex = (): string => {
-				const _endRandomColorHex: string = randomFromArray(CONFIG.colors!);
+				const _endRandomColorHex: string = randomFromArray(DECODER_CONFIG.colors!);
 				if (_endRandomColorHex === randomColorHex) return endRandomColorHex();
 				return _endRandomColorHex;
 			};
@@ -124,6 +124,7 @@ class MidiDecoder {
 			
 			const jsonString = JSON.stringify(json, null, 4);
 			await writeFile(output, jsonString);
+			console.log(chords);
 			return chords;
 		} catch (error) {
 			throw new Error(error);
@@ -146,7 +147,7 @@ class MidiDecoder {
 	}
 	
 	private static normalizeTime (time: number): number {
-		let bpm = 120 / CONFIG.bpm;
+		let bpm = 120 / DECODER_CONFIG.bpm;
 		bpm = 2000 * bpm / 768;
 		bpm = bpm * 2;
 		time = time * bpm;

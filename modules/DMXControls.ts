@@ -1,8 +1,8 @@
-import DMX from 'dmx';
+import DMX, { Universe } from 'dmx';
 
 export default class DMXControls {
 	dmx: DMX;
-	universe: DMX['universe'];
+	universe: Universe;
 
 	constructor (universeName: string, driver: string, deviceId: string) {
 		this.dmx = new DMX();

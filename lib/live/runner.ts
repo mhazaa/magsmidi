@@ -1,8 +1,8 @@
-import DMXControls from '../modules/DMXControls';
+import DMXControls from '../../modules/DMXControls';
 const dmxControls = new DMXControls('demo', 'enttec-open-usb-dmx', '/dev/cu.usbserial-AB0KU85Q');
 import events from 'events';
 const eventEmitter = new events.EventEmitter();
-import map from '../helperFunctions/map';
+import map from '../../helperFunctions/map';
 
 let timeElapsed = 0;
 let reset = true;

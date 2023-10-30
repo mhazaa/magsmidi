@@ -8,7 +8,7 @@ export type NoteData = {
 	channel: number
 }
 
-export default class MidiLivePlayer {
+class MidiLivePlayer {
 	input: easymidi.Input;
 	onStart: {(noteData: NoteData): void} | null = null;
 	onEnd: {(noteData: NoteData): void} | null = null;
@@ -41,3 +41,5 @@ export default class MidiLivePlayer {
 		});
 	}
 }
+
+export default MidiLivePlayer;

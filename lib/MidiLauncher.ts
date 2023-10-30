@@ -1,8 +1,7 @@
 import MidiPlayer, { EventData } from './MidiPlayer';
 import DMXControls from '../modules/DMXControls';
-import BlinkstickControls from '../modules/BlinkstickControls';
 
-export default async (midiPlayers: MidiPlayer[], lightDevice: DMXControls | BlinkstickControls) => {
+export default async (midiPlayers: MidiPlayer[], lightDevice: DMXControls) => {
 	await Promise.all(midiPlayers.map(async midiPlayer =>
 		await midiPlayer.prepare()
 	));
