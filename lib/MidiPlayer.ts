@@ -1,14 +1,26 @@
-import CONFIG from '../CONFIG';
-const PLAYER_CONFIG = CONFIG.playerOptions;
 import { Color, Note, Chord } from './MidiDecoder';
-
 import { runShellAsync } from '../helperFunctions/shell';
 import { readFile } from '../helperFunctions/fsAsync';
 import map from '../helperFunctions/map';
-
 import events from 'events';
+
+interface PlayerOptions {
+	log?: boolean;
+	logDuring?: boolean;
+	loopLights?: boolean;
+}
+
+const defaultPlayerOptions: PlayerOptions = {
+	log: false,
+	logDuring: false,
+	loopLights: false,
+};
+
 const eventEmitter = new events.EventEmitter();
 let timeElapsed = 0;
+
+type EventTypes = 'noteStart' | 'noteDuring' | 'noteEnd' | 'chordStart' | 'chordDuring' | 'chordEnd';
+const eventTypes = ['noteStart', 'noteDuring', 'noteEnd', 'chordStart', 'chordDuring', 'chordEnd'];
 
 class EventData {
 	channel: number;
@@ -17,13 +29,15 @@ class EventData {
 	b: number;
 }
 
-type EventTypes = 'noteStart' | 'noteDuring' | 'noteEnd' | 'chordStart' | 'chordDuring' | 'chordEnd';
-const eventTypes = ['noteStart', 'noteDuring', 'noteEnd', 'chordStart', 'chordDuring', 'chordEnd'];
-
 class Timer {
+	loopLights: boolean;
 	deltaTime = new Date();
 	currentTime: Date;
 	end = 0;
+
+	constructor (loopLights: boolean = defaultPlayerOptions.loopLights!) {
+		this.loopLights = loopLights;
+	}
 
 	restart (): void {
 		this.deltaTime = new Date();
@@ -34,7 +48,7 @@ class Timer {
 	tick (): number {
 		this.currentTime = new Date();
 		timeElapsed = this.currentTime.getTime() - this.deltaTime.getTime();
-		if (PLAYER_CONFIG.loopLights && timeElapsed > this.end) this.restart();
+		if (this.loopLights && timeElapsed > this.end) this.restart();
 		return timeElapsed;
 	}
 }
@@ -85,11 +99,13 @@ class NotePlayer extends Note {
 	onStart: (data: EventData) => void = () => null;
 	onDuring: (data: EventData) => void = () => null;
 	onEnd: (data: EventData) => void = () => null;
+	playerOptions: PlayerOptions;
 
-	constructor (note: Note, chordStart: number) {
+	constructor (note: Note, chordStart: number, playerOptions: PlayerOptions) {
 		super(note.key, note.velocity, note.length, note.lights);
 
 		this.startTime = chordStart;
+		this.playerOptions = playerOptions;
 
 		this.lights.forEach(light => {
 			if (light.lightType === 'blend' || light.lightType === 'fadein' || light.lightType === 'fadeout') {
@@ -100,7 +116,7 @@ class NotePlayer extends Note {
 	}
 
 	start () {
-		if (PLAYER_CONFIG.log) console.log(this.key + ': started');
+		if (this.playerOptions.log) console.log(this.key + ': started');
 
 		this.lights.forEach(light => {
 			const data = new EventData();
@@ -121,7 +137,7 @@ class NotePlayer extends Note {
 	}
 
 	during () {
-		if (PLAYER_CONFIG.logDuring) console.log(this.key + ': during');
+		if (this.playerOptions.logDuring) console.log(this.key + ': during');
 
 		this.lights.forEach( light => {
 			if (light.lightType === 'blink') return;
@@ -156,7 +172,7 @@ class NotePlayer extends Note {
 	}
 
 	end () {
-		if (PLAYER_CONFIG.log) console.log(this.key + ': end');
+		if (this.playerOptions.log) console.log(this.key + ': end');
 
 		this.lights.forEach(light => {
 			const data: EventData = {
@@ -224,14 +240,16 @@ class ChordPlayer extends StatefulComponent {
 	onStart: (data: EventData) => void = () => null;
 	onDuring: (data: EventData) => void = () => null;
 	onEnd: (data: EventData) => void = () => null;
+	playerOptions: PlayerOptions;
 
-	constructor (chord: Chord) {
+	constructor (chord: Chord, playerOptions: PlayerOptions) {
 		super();
 		// state // startTime // length // totalLength // runDuring // start // during // end
 		Object.assign(this, chord);
 		// startTime // totalLength // notes
+		this.playerOptions = playerOptions;
 		this.notes.forEach(note =>
-			this.notePlayers.push( new NotePlayer(note, this.startTime) )
+			this.notePlayers.push( new NotePlayer(note, this.startTime, this.playerOptions) )
 		);
 	}
 
@@ -268,15 +286,17 @@ class ChordPlayer extends StatefulComponent {
 class MidiPlayer {
 	jsonFilePath: string;
 	songPath?: string;
+	options: PlayerOptions;
 	totalLength = 0;
 	chordPlayers: ChordPlayer[] = [];
 
-	constructor (jsonFilePath: string, songPath?: string) {
+	constructor (jsonFilePath: string, songPath?: string, options: PlayerOptions = {}) {
 		this.jsonFilePath = jsonFilePath;
-		this.songPath = songPath;
+		if (songPath) this.songPath = songPath;
+		this.options = { ...defaultPlayerOptions, ...options };
 	}
 
-	public event (event: EventTypes, callback: (eventData: EventData) => void) {
+	public event (event: EventTypes, callback: (data: EventData) => void) {
 		if (!eventTypes.includes(event)) throw new Error('Does not match any of midiplayer event listeners');
 
 		this.chordPlayers.forEach(chordPlayer => {
@@ -295,7 +315,7 @@ class MidiPlayer {
 	}
 
 	playSong () {
-		if (!this.songPath) throw new Error('songPath was not passed as an argument to the constructor')
+		if (!this.songPath) throw new Error('songPath was not passed as an argument to the constructor');
 		runShellAsync(`afplay ${this.songPath}`);
 	}
 
@@ -311,7 +331,7 @@ class MidiPlayer {
 			const chords: Chord[] = fileParsed.chords;
 			this.chordPlayers = [];
 			chords.forEach((chord: Chord) =>
-				this.chordPlayers.push( new ChordPlayer(chord))
+				this.chordPlayers.push(new ChordPlayer(chord, this.options))
 			);
 			return this.chordPlayers;
 		} catch (error) {
@@ -321,7 +341,7 @@ class MidiPlayer {
 
 	async play () {
 		if (this.songPath) this.playSong();
-		const timer = new Timer();
+		const timer = new Timer(this.options.loopLights);
 		timer.end = this.totalLength;
 
 		const loop = () => {
@@ -334,5 +354,5 @@ class MidiPlayer {
 	}
 }
 
-export { EventData };
+export { PlayerOptions, EventData };
 export default MidiPlayer;

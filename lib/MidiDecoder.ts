@@ -1,10 +1,22 @@
-import CONFIG from '../CONFIG';
-const DECODER_CONFIG = CONFIG.decoderOptions;
 import midiParser from 'midi-parser-js';
-
 import { readFile, writeFile } from '../helperFunctions/fsAsync';
 import randomInt from '../helperFunctions/randomInt';
 import randomFromArray from '../helperFunctions/randomFromArray';
+
+interface DecoderOptions {
+	bpm?: number; // required but provided by default
+	channelsRange?: [number, number], // [min, max]
+	channels?: number[]; // takes priority over channelsRange
+	colors?: string[]; // randomized if not defined
+	lightTypes?: LightTypes[]; // randomized if not defined
+}
+
+const defaultDecoderOptions: DecoderOptions = {
+	bpm: 120,
+	channelsRange: [1, 15], 
+	colors: ['#9500ff', '#ffba00', '#0700ff', '#00ffb3', '#ff000f'],
+	lightTypes: ['blink', 'fadein', 'blend'],
+};
 
 class Color {
 	r: number; // range of 0 - 255
@@ -107,7 +119,7 @@ class Chord {
 }
 
 class MidiDecoder {
-	public static async decode (midiFilePath: string, output?: string): Promise<Chord[]> {
+	public static async decode (midiFilePath: string, output?: string, options: DecoderOptions = {}): Promise<Chord[]> {
 		try {
 			if (!output) output = midiFilePath.replace('.mid', '.json');
 			const parsed = await MidiDecoder.parse(midiFilePath);
@@ -207,5 +219,5 @@ class MidiDecoder {
 	}
 }
 
-export { Color, LightTypes, Light, Note, Chord };
+export { DecoderOptions, Color, LightTypes, Light, Note, Chord };
 export default MidiDecoder;

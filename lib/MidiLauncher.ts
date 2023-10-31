@@ -1,7 +1,7 @@
 import MidiPlayer, { EventData } from './MidiPlayer';
 import DMXControls from '../modules/DMXControls';
 
-export default async (midiPlayers: MidiPlayer[], lightDevice: DMXControls) => {
+const MidiLauncher = async (midiPlayers: MidiPlayer[], lightDevice: DMXControls) => {
 	await Promise.all(midiPlayers.map(async midiPlayer =>
 		await midiPlayer.prepare()
 	));
@@ -22,3 +22,5 @@ export default async (midiPlayers: MidiPlayer[], lightDevice: DMXControls) => {
 
 	midiPlayers.forEach(midiPlayer => midiPlayer.play());
 };
+
+export default MidiLauncher;
